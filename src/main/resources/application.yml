@@ -1,0 +1,15 @@
+micronaut:
+  application:
+    name: customer
+datasources:
+  default:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: ''
+    driver-class-name: org.postgresql.Driver
+    db-type: postgres
+jpa.default.properties.hibernate.hbm2ddl.auto: none
+flyway:
+  datasources:
+    default:
+      enabled: true
