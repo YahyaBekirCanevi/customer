@@ -5,11 +5,17 @@ datasources:
   default:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: ''
-    driver-class-name: org.postgresql.Driver
+    password: 'qwe'
+    #driver-class-name: org.postgresql.Driver
     db-type: postgres
-jpa.default.properties.hibernate.hbm2ddl.auto: none
+    schema-generate: CREATE_DROP
+    dialect: POSTGRES
+jpa.default.properties.hibernate:
+  hbm2ddl.auto: validate
+  show_sql: true
 flyway:
   datasources:
     default:
       enabled: true
+
+#docker run -d --name local_postgres -v my_dbdata:/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=qwe -e POSTGRES_DB=postgres -d postgres:latest
