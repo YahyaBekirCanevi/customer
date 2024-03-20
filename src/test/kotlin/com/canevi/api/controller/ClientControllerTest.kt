@@ -5,18 +5,18 @@ import com.canevi.data.model.Client
 import com.canevi.data.repository.ClientCrudRepository
 import io.micronaut.http.HttpStatus
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
-import jakarta.inject.Inject
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.any
+import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import java.util.*
 
 @MicronautTest
 class ClientControllerTest {
 
-    @Inject
+    @Mock
     lateinit var clientCrudRepository: ClientCrudRepository
 
     lateinit var clientController: ClientController

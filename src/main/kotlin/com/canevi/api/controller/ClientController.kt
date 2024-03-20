@@ -3,7 +3,6 @@ package com.canevi.api.controller
 import com.canevi.api.domain.request.SaveClient
 import com.canevi.data.model.Client
 import com.canevi.data.repository.ClientCrudRepository
-import com.oracle.svm.core.annotate.Inject
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
@@ -13,6 +12,7 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Put
 import io.micronaut.scheduling.TaskExecutors
 import io.micronaut.scheduling.annotation.ExecuteOn
+import jakarta.inject.Inject
 import java.net.URI
 import java.util.*
 import kotlin.jvm.optionals.getOrElse
@@ -20,10 +20,17 @@ import kotlin.jvm.optionals.getOrElse
 @ExecuteOn(TaskExecutors.BLOCKING)
 @Controller("/client")
 class ClientController(@Inject val clientRepository: ClientCrudRepository) {
+    @Get
+    fun getAll(): HttpResponse<List<Client>> {
+        val clients = clientRepository.findAll()
+        return HttpResponse.ok(clients)
+            .headers {
+                it.location(URI.create("/client"))
+            }
+    }
     @Get("/{id}")
     fun find(id: String): Optional<Client> =
         clientRepository.findById(id)
-
     @Post
     fun save(@Body request: SaveClient): HttpResponse<Client> {
         val savedClient = clientRepository.save(Client(name = request.name, password = request.password))
@@ -54,8 +61,7 @@ class ClientController(@Inject val clientRepository: ClientCrudRepository) {
                 it.location(location(id))
             }
     }
-
     private fun location(id: String): URI {
-        return URI.create("/genres/$id")
+        return URI.create("/client/$id")
     }
 }
