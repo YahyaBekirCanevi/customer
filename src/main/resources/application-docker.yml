@@ -3,7 +3,7 @@ micronaut:
     name: customer
 datasources:
   default:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://db:5432/postgres
     username: postgres
     password: qwe
     driver-class-name: org.postgresql.Driver
@@ -17,5 +17,3 @@ flyway:
   datasources:
     default:
       enabled: true
-
-#docker run -d --name local_postgres -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=qwe -e POSTGRES_DB=postgres -d postgres:latest

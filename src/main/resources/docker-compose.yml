@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  app:
+    image: 'customer:latest'
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    links:
+      - db
+    environment:
+      JDBC_URL: jdbc:postgresql://db:5432/time
+      JDBC_HOST: db
+      JDBC_PORT: 5432
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwe
+      POSTGRES_DB: postgres
+
+#docker run -d --name local_postgres -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=qwe -e POSTGRES_DB=postgres -d postgres:latest
+#docker run -d --name local_customer -p 8080:8080 customer:latest
