@@ -20,7 +20,7 @@ COPY --from=build /app/build/libs/*.jar /app/app.jar
 EXPOSE 8080
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-Dmicronaut.environments=docker", "-Dmicronaut.config.files=/some/external/location/application-docker.yml", "-Dcom.sun.management.jmxremote", "-Xmx128m", "-jar", "/app/app.jar"]
 
 
 # FROM openjdk:17
