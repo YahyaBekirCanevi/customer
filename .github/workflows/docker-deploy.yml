@@ -1,4 +1,4 @@
-name: Deploy Micronaut to GitHub Pages
+name: Build & Test Micronaut
 
 on:
   push:
@@ -28,10 +28,3 @@ jobs:
       
     - name: Build Micronaut application
       run: ./gradlew build --no-daemon
-
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build/resources/main  # Adjust if necessary
-        publish_branch: gh-pages
