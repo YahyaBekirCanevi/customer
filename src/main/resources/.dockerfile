@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 
 # Build the Micronaut application
-RUN gradle build
+RUN ./gradlew build
 
 # Use an official OpenJDK image to run the application
 FROM openjdk:21
