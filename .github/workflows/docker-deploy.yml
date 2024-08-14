@@ -22,7 +22,10 @@ jobs:
         cache-dependency-path: | # optional
           sub-project/*.gradle*
           sub-project/**/gradle-wrapper.properties
-
+          
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
+      
     - name: Build Micronaut application
       run: ./gradlew build --no-daemon
 
