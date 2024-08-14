@@ -1,13 +1,13 @@
 # Use an official Gradle image to build the project
-FROM gradle:7.5.0-jdk17 AS build
+FROM gradle:8.5.0-jdk17 AS build
 WORKDIR /app
 COPY . .
 
 # Build the Micronaut application
-RUN gradle build -x test
+RUN gradle build
 
 # Use an official OpenJDK image to run the application
-FROM openjdk:17
+FROM openjdk:21
 WORKDIR /app
 
 # Copy the built application JAR file

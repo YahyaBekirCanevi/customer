@@ -48,7 +48,7 @@ application {
     mainClass.set("com.canevi.ApplicationKt")
 }
 java {
-    sourceCompatibility = JavaVersion.toVersion("17")
+    sourceCompatibility = JavaVersion.toVersion("21")
 }
 
 
