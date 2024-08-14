@@ -3,6 +3,9 @@ FROM gradle:8.5.0-jdk17 AS build
 WORKDIR /app
 COPY . .
 
+# Make gradlew executable
+RUN chmod +x ./gradlew
+
 # Build the Micronaut application
 RUN ./gradlew build
 
