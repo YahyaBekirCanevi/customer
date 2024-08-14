@@ -4,31 +4,29 @@ import com.canevi.api.domain.request.SaveClient
 import com.canevi.data.model.Client
 import com.canevi.data.repository.ClientCrudRepository
 import io.micronaut.http.HttpStatus
-import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.ArgumentMatchers.any
+import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
+import org.mockito.junit.jupiter.MockitoExtension
+import org.mockito.kotlin.whenever
 import java.util.*
 
-@MicronautTest
+@ExtendWith(MockitoExtension::class)
 class ClientControllerTest {
 
     @Mock
     lateinit var clientCrudRepository: ClientCrudRepository
 
+    @InjectMocks
     lateinit var clientController: ClientController
-    @BeforeEach
-    fun setup() {
-        clientController = ClientController(clientCrudRepository)
-    }
 
     @Test
     fun `test find client by id`() {
         // Mock the behavior of clientRepository.findById("1")
-        `when`(clientCrudRepository.findById("1")).thenReturn(Optional.of(Client("1", "Test", "123456")))
+        whenever(clientCrudRepository.findById("1")).thenReturn(Optional.of(Client("1", "Test", "123456")))
 
         val response = clientController.find("1")
 
@@ -41,12 +39,12 @@ class ClientControllerTest {
         val savedClient = Client("1", "New Client", "newpassword")
 
         // Mock the behavior of clientRepository.save(Client)
-        `when`(clientCrudRepository.save(any(Client::class.java))).thenReturn(savedClient)
+        whenever(clientCrudRepository.save(any(Client::class.java))).thenReturn(savedClient)
 
         val response = clientController.save(saveClientRequest)
 
         assertEquals(HttpStatus.CREATED, response.status)
-        assertEquals("New Client", response.body().name)
+        assertEquals("\'New Client\' client created!", response.body())
     }
 
     @Test
@@ -55,7 +53,8 @@ class ClientControllerTest {
         val updatedClient = Client("1", "Updated Client", "updatedpassword")
 
         // Mock the behavior of clientRepository.update("1", SaveClient)
-        `when`(clientCrudRepository.update(any())).thenReturn(updatedClient)
+        whenever(clientCrudRepository.findById(any())).thenReturn(Optional.of(updatedClient))
+        whenever(clientCrudRepository.update(any())).thenReturn(updatedClient)
 
         val response = clientController.update("1", saveClientRequest)
 
