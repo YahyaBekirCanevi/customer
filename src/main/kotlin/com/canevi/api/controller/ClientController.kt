@@ -4,12 +4,7 @@ import com.canevi.api.domain.request.SaveClient
 import com.canevi.data.model.Client
 import com.canevi.data.repository.ClientCrudRepository
 import io.micronaut.http.HttpResponse
-import io.micronaut.http.annotation.Body
-import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Delete
-import io.micronaut.http.annotation.Get
-import io.micronaut.http.annotation.Post
-import io.micronaut.http.annotation.Put
+import io.micronaut.http.annotation.*
 import io.micronaut.scheduling.TaskExecutors
 import io.micronaut.scheduling.annotation.ExecuteOn
 import jakarta.inject.Inject
@@ -32,9 +27,9 @@ class ClientController(@Inject val clientRepository: ClientCrudRepository) {
     fun find(id: String): Optional<Client> =
         clientRepository.findById(id)
     @Post
-    fun save(@Body request: SaveClient): HttpResponse<Client> {
+    fun save(@Body request: SaveClient): HttpResponse<String> {
         val savedClient = clientRepository.save(Client(name = request.name, password = request.password))
-        return HttpResponse.created(savedClient)
+        return HttpResponse.created("\'${request.name}\' client created!")
             .headers {
                 it.location(location(savedClient.id!!))
             }

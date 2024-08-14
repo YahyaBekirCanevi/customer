@@ -1,5 +1,15 @@
 version: '3.8'
 services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwe
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
   app:
     image: 'customer:latest'
     build:
@@ -14,14 +24,11 @@ services:
       JDBC_URL: jdbc:postgresql://db:5432/time
       JDBC_HOST: db
       JDBC_PORT: 5432
-  db:
-    image: postgres:latest
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: qwe
-      POSTGRES_DB: postgres
+      JDBC_USER: postgres
+      JDBC_PASSWORD: qwe
+      JDBC_DB: postgres
+volumes:
+  pgdata:
 
 #docker run -d --name local_postgres -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=qwe -e POSTGRES_DB=postgres -d postgres:latest
 #docker run -d --name local_customer -p 8080:8080 customer:latest
