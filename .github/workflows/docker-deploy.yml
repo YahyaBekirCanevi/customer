@@ -17,6 +17,8 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '17'
+        # Java distribution. See the list of supported distributions in README file
+        distribution: temurin
 
     - name: Build Micronaut application
       run: ./gradlew build  # Adjust if using Maven
