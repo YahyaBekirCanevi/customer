@@ -4,9 +4,9 @@ plugins {
     id("org.jetbrains.kotlin.plugin.jpa") version "1.9.23"
     id("com.google.devtools.ksp") version "1.9.23-1.0.19"
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("io.micronaut.application") version "4.3.4"
-    id("io.micronaut.test-resources") version "4.3.4"
-    id("io.micronaut.aot") version "4.3.4"
+    id("io.micronaut.application") version "4.4.2"
+    id("io.micronaut.test-resources") version "4.4.2"
+    id("io.micronaut.aot") version "4.4.2"
 }
 
 version = "0.1"
@@ -71,4 +71,9 @@ micronaut {
         deduceEnvironment.set(true)
         optimizeNetty.set(true)
     }
+}
+
+
+tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
+    jdkVersion = "21"
 }
