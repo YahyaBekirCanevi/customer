@@ -78,7 +78,13 @@ micronaut {
     }
 }
 
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "com.canevi.ApplicationKt" // Replace with your main class
+    }
+}
 
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
     jdkVersion = "21"
 }
+

@@ -3,11 +3,10 @@ micronaut:
     name: customer
 datasources:
   default:
-    url: jdbc:postgresql://${JDBC_HOST}:${JDBC_PORT}/postgres
-    username: postgres
-    password: qwe
+    url: ${SPRING_DATASOURCE_HIKARI_JDBC_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
-    db-type: postgres
     schema-generate: CREATE_DROP
     dialect: POSTGRES
 jpa.default.properties.hibernate:
@@ -17,3 +16,4 @@ flyway:
   datasources:
     default:
       enabled: true
+      locations: classpath:db/migration

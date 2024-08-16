@@ -1,0 +1,40 @@
+version: '3.8'
+name: customer
+services:
+  app:
+    image: yahyabekircanevi/customer-be:app-latest
+    container_name: app
+    build:
+      context: .
+      dockerfile: .dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - net
+    environment:
+      #- DATABASE_URL=jdbc:postgresql://customer-db-1:5432/customer
+      - SPRING_DATASOURCE_HIKARI_JDBC_URL=jdbc:postgresql://db:5432/customer
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=postgres
+  db:
+    image: yahyabekircanevi/customer-be:db-latest # postgres:15
+    container_name: db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: customer
+    networks:
+      - net
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+networks:
+  net:
+volumes:
+  postgres_data:
+
+#docker run -d --name local_postgres -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=qwe -e POSTGRES_DB=postgres -d postgres:latest
+#docker run -d --name local_customer -p 8080:8080 customer:latest
